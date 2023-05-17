@@ -42,15 +42,15 @@ configuration file should look like:
     "context": [
         {
             "discord_name": "Evellyne",
-            "personality": "Evelyn is a seasoned data scientist. Interact in a polite and informative manner."
+            "personality": "Evelyn is a seasoned data scientist. Interact in a polite and..."
         },
         {
             "discord_name": "Sammy",
-            "personality": "Sam is a popular YouTube vlogger. Communicate in a cheerful and supportive way."
+            "personality": "Sam is a popular YouTube vlogger. Communicate in a cheerful and..."
         },
         {
             "discord_name": "Morgan",
-            "personality": "Morgan is an NFT enthusiast. Respond to them with slight skepticism and wit."
+            "personality": "Morgan is an NFT enthusiast. Respond to them with slight skepticism..."
         }
     ],
     "global_personality": "Maintain a cordial demeanor.",
