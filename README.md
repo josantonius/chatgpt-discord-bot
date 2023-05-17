@@ -50,7 +50,7 @@ configuration file should look like:
         },
         {
             "discord_name": "Morgan",
-            "personality": "Morgan is an NFT enthusiast. Respond to them with slight skepticism..."
+            "personality": "Morgan is an NFT enthusiast. Respond to them with skepticism..."
         }
     ],
     "global_personality": "Maintain a cordial demeanor.",
