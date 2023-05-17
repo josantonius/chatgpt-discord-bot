@@ -1,4 +1,5 @@
 import re
+import os
 import json
 import openai
 import discord
@@ -6,7 +7,9 @@ import logging
 from collections import deque
 from discord.ext import commands
 
-with open("config.json") as config_file:
+script_dir = os.path.dirname(os.path.realpath(__file__))
+config_path = os.path.join(script_dir, 'config.json')
+with open(config_path) as config_file:
     config = json.load(config_file)
 
 logger = logging.getLogger('discord')
