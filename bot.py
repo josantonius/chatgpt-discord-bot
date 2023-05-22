@@ -64,8 +64,6 @@ async def generate_response(message):
             logger.info('Making a call to the OpenAI API')
             return openai.ChatCompletion.create(
                 model=config["model"],
-                max_tokens=config["max_tokens"],
-                temperature=config["temperature"],
                 messages=get_messages(message.author.name, 'assistant', message.content)
             )
 
@@ -91,7 +89,7 @@ def add_message(message):
     message_length = len(str(message))
     logger.info(f'Adding message of length {message_length} to history')
 
-    while history_length > config["max_tokens"]:
+    while history_length > config["memory_characters"]:
         oldest_message = history.popleft()
         history_length -= len(str(oldest_message))
         logger.info(f'Removed message from history. Current history length is {history_length}')

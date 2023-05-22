@@ -34,8 +34,7 @@ configuration file should look like:
 ```json
 {
     "model": "gpt-4",
-    "max_tokens": 500,
-    "temperature": 0.6,
+    "memory_characters": 8000,
     "openai_api_key": "<Your OpenAI API key>",
     "discord_token": "<Your Discord Bot Token>",
     "presence": "The Lounge",
@@ -58,6 +57,9 @@ configuration file should look like:
     "error_message": "Words fail me at the moment :/"
 }
 ```
+
+`memory_characters` are the number of characters that the bot will remember from previous messages.
+This value should not exceed the maximum number of tokens allowed by the model you are using.
 
 Replace `<Your OpenAI API key>` and `<Your Discord Bot Token>` with your actual OpenAI API key and
 Discord bot token respectively.
