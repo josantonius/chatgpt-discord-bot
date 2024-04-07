@@ -4,6 +4,7 @@ import json
 import openai
 import discord
 import logging
+import time
 from collections import deque
 from discord.ext import commands
 
@@ -24,8 +25,9 @@ bot = commands.Bot(command_prefix="<@{bot.user.id}>", intents=intents)
 
 history = deque()
 history_length = 0
-
+last_activity_time = time.time()
 context = config["context"]
+history_refresh_interval = config["history_refresh_interval"]
 
 global_personality = config["global_personality"]
 
@@ -56,6 +58,8 @@ def get_messages(sender, recipient, message):
     ]
 
 async def generate_response(message):
+    global last_activity_time
+    last_activity_time = time.time()
     try:
         if message.author == bot.user:
             return
@@ -85,9 +89,12 @@ async def generate_response(message):
         logging.error(f"Error generating response: {e}", exc_info=True)
 
 def add_message(message):
-    global history_length
+    global history_length, last_activity_time
     message_length = len(str(message))
     logger.info(f'Adding message of length {message_length} to history')
+
+    if time.time() - last_activity_time > history_refresh_interval:
+        clear_history() 
 
     while history_length > config["memory_characters"]:
         oldest_message = history.popleft()
@@ -97,6 +104,13 @@ def add_message(message):
     history.append(message)
     history_length += message_length
     logger.info(f'Added message to history. Current history length is {history_length}')
+    last_activity_time = time.time()
+
+def clear_history():
+    global history, history_length
+    history.clear()
+    history_length = 0
+    logger.info('History cleared due to inactivity')
 
 @bot.event
 async def on_ready():
