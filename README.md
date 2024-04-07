@@ -35,6 +35,7 @@ configuration file should look like:
 {
     "model": "gpt-4",
     "memory_characters": 8000,
+    "history_refresh_interval": 600,
     "openai_api_key": "<Your OpenAI API key>",
     "discord_token": "<Your Discord Bot Token>",
     "presence": "The Lounge",
@@ -60,6 +61,8 @@ configuration file should look like:
 
 `memory_characters` are the number of characters that the bot will remember from previous messages.
 This value should not exceed the maximum number of tokens allowed by the model you are using.
+
+`history_refresh_interval` is the interval in seconds at which the chat context is refreshed.
 
 Replace `<Your OpenAI API key>` and `<Your Discord Bot Token>` with your actual OpenAI API key and
 Discord bot token respectively.
