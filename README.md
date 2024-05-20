@@ -7,7 +7,6 @@ personality to each user and maintaining the context of previous questions and a
 the ability to view and understand images, so that one or more images can be attached to the message.
 It's powered by OpenAI's ChatGPT models.
 
-
 ## Requirements
 
 - Python 3.6 or above.
