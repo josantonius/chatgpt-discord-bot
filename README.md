@@ -2,9 +2,11 @@
 
 [![License](https://img.shields.io/github/license/josantonius/chatgpt-discord-bot)](LICENSE)
 
-A bot designed for a small Discord channel among friends.
-This bot allows assigning a distinct personality to each user and maintaining the
-context of previous questions and answers. It's powered by OpenAI's ChatGPT models.
+A bot designed for a small Discord channel among friends. This bot allows assigning a distinct
+personality to each user and maintaining the context of previous questions and answers. It also has
+the ability to view and understand images, so that one or more images can be attached to the message.
+It's powered by OpenAI's ChatGPT models.
+
 
 ## Requirements
 
@@ -33,9 +35,9 @@ configuration file should look like:
 
 ```json
 {
-    "model": "gpt-4",
-    "memory_characters": 8000,
-    "history_refresh_interval": 600,
+    "model": "gpt-4o",
+    "memory_characters": 120000,
+    "history_refresh_interval": 900,
     "openai_api_key": "<Your OpenAI API key>",
     "discord_token": "<Your Discord Bot Token>",
     "presence": "The Lounge",
@@ -93,6 +95,8 @@ The bot is summoned by mentioning it at the start of the message. For example:
 ```txt
 @ChatGPT How are you?
 ```
+
+**It also has the ability to view and understand images, so that one or more images can be attached to the message.**
 
 ## Logging
 
