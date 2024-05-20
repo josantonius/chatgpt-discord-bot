@@ -125,7 +125,7 @@ async def generate_response(message):
             if image_urls:
                 for description in content.split('\n'):
                     image_descriptions.append(description)
-                    add_message({"role": "assistant", "content": f"Image description: {description}"})
+                    add_message({"role": "assistant", "content": f"Descripción de imagen: {description}"})
             else:
                 add_message({"role": "assistant", "content": content})
 
