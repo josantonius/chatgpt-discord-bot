@@ -37,6 +37,12 @@ def get_user(user):
             return entry
     return None
 
+def get_bot_context(message_content):
+    for tag, bot_context in config["extra_system_contexts"].items():
+        if tag in message_content:
+            return bot_context
+    return config["system_context"]
+
 def get_messages(sender, recipient, message, image_urls=None):
     sender = sender.lower()
     sender_role = "assistant" if sender == "assistant" else "user"
@@ -45,7 +51,7 @@ def get_messages(sender, recipient, message, image_urls=None):
     user = get_user(role)
     personality = user['personality'] if user else global_personality
 
-    bot_context = config["system_context"]
+    bot_context = get_bot_context(message)
 
     user_message_content = [{"type": "text", "text": f"{personality} {message}"}] if sender_role == "user" else [{"type": "text", "text": message}]
 
@@ -95,6 +101,11 @@ def clear_history():
     history_length = 0
     logger.info('History cleared due to inactivity')
 
+async def send_long_message(channel, content):
+    chunks = [content[i:i + 2000] for i in range(0, len(content), 2000)]
+    for chunk in chunks:
+        await channel.send(chunk)
+
 async def generate_response(message):
     global last_activity_time
     last_activity_time = time.time()
@@ -129,7 +140,7 @@ async def generate_response(message):
             else:
                 add_message({"role": "assistant", "content": content})
 
-            await message.reply(content)
+            await send_long_message(message.channel, content)
             logger.info("Assistant: " + content)
             logger.info("Tokens: " + str(response["usage"]["total_tokens"]))
 
@@ -153,7 +164,11 @@ async def on_message(message):
             clear_history()
         last_activity_time = current_time
         user_id = re.findall(r'<@!?(\d+)>', message.content)[0]
-        message.content = message.content.replace(f'<@{user_id}>', '').strip()
-        await generate_response(message)
+        command = message.content.replace(f'<@{user_id}>', '').strip()
+        if command.lower() == config["history_refresh_force_command"]:
+            clear_history()
+            await message.channel.send(config["history_refresh_success_message"])
+        else:
+            await generate_response(message)
 
 bot.run(config["discord_token"])
